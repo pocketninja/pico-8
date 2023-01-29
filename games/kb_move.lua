@@ -1,3 +1,8 @@
+speed = {
+    high = 3,
+    low = 1,
+}
+
 player = {
     --position = vec(10, 10),
     rect = rect:new({
@@ -5,7 +10,7 @@ player = {
         -- 1px smaller than actual sprite to allow for 1px gaps
         w = 7, h = 7
     }),
-    speed = 1,
+    speed = speed.low,
     speed_scale = 1,
     sprite = 1,
 }
@@ -63,19 +68,16 @@ function handle_input()
     -- when X is pressed, set speed to 3
     if btn(❎)
     then
-        player.speed = 3
+        player.speed = speed.high
     else
-        player.speed = 1
+        player.speed = speed.low
     end
 
-    shift_to_apply = vec:new();
+    new_y = 0;
+    new_x = 0;
 
     -- speed is in pixels, so let's check each step of the player speed, it can be negative or positive
     -- this is prob very inefficient, but it works
-
-    -- @TODO The following can end up with the player stuck in corners, need to fix! We probably need to look ahead in the
-    --       direction the player is moving, rather than x and y individually. Eg, X might pass all the checks, but Y
-    --       might not, which could result in the player being stuck in a corner.
 
     for i = 1, abs(shift.x) do
         -- flip the sign if the person is moving left
@@ -91,8 +93,10 @@ function handle_input()
         end
 
         -- set the shift
-        shift_to_apply.x = i;
+        new_x = i;
     end
+
+    player.rect.position = player.rect.position + vec:new({ x = new_x, y = 0 })
 
     for i = 1, abs(shift.y) do
         -- flip the sign if the person is moving up
@@ -107,8 +111,8 @@ function handle_input()
         end
 
         -- set the shift.
-        shift_to_apply.y = i;
+        new_y = i;
     end
 
-    player.rect.position = player.rect.position + shift_to_apply
+    player.rect.position = player.rect.position + vec:new({ x = 0, y = new_y })
 end

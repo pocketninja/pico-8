@@ -83,6 +83,10 @@ function vec:clone()
     return vec:new({ x = self.x, y = self.y })
 end
 
+function vec:distance(other)
+    return sqrt((other.x - self.x) ^ 2 + (other.y - self.y) ^ 2)
+end
+
 rect = {
     position,
     w,

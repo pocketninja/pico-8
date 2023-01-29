@@ -1,6 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 39
 __lua__
+-- hello dvd
 
 #include games/hello_dvd.lua
 __gfx__

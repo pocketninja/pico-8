@@ -8,3 +8,5 @@ A collection of PICO-8 cartridges and experiments. Just noodling, really.
 ![002_kb_move.p8.png](carts%2F002_kb_move.p8.png)
 
 ![003_sprite_scale.p8.png](carts%2F003_sprite_scale.p8.png)
+
+![004_hungry_circles.p8.png](carts%2F004_hungry_circles.p8.png)

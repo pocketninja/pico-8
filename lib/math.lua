@@ -10,11 +10,21 @@ vec = {
     end,
 
     __mul = function(a, b)
-        return vec:new({ x = a.x * b, y = a.y * b })
+        -- if a is a number, then we're multiplying a scalar
+        if type(a) == "number" then
+            return vec:new({ x = a * b.x, y = a * b.y })
+        end
+
+        -- if b is a number, then we're multiplying a scalar
+        if type(b) == "number" then
+            return vec:new({ x = a.x * b, y = a.y * b })
+        end
+
+        return vec:new({ x = a.x * b.x, y = a.y * b.y })
     end,
 
     __div = function(a, b)
-        return vec:new({ x = a.x / b, y = a.y / b })
+        return vec:new({ x = a.x / b.x, y = a.y / b.y })
     end,
 
     __unm = function(a)
@@ -87,17 +97,18 @@ function vec:distance(other)
     return sqrt((other.x - self.x) ^ 2 + (other.y - self.y) ^ 2)
 end
 
-rect = {
+-- drect instead of rect, because rect is a pico function
+drect = {
     position,
     w,
     h,
 
     __tostring = function(a)
-        return "rect: " .. a.position.x .. ", " .. a.position.y .. ", " .. a.w .. ", " .. a.h
+        return "drect: " .. a.position.x .. ", " .. a.position.y .. ", " .. a.w .. ", " .. a.h
     end,
 }
 
-function rect:new(o)
+function drect:new(o)
     o = o or {}
     o.position = o.position or vec:new()
     o.w = o.w or 0
@@ -107,77 +118,79 @@ function rect:new(o)
     return r
 end
 
-function rect:left()
+function drect:left()
     return self.position.x - self.w / 2
 end
 
-function rect:right()
+function drect:right()
     return self.position.x + self.w / 2
 end
 
-function rect:top()
+function drect:top()
     return self.position.y - self.h / 2
 end
 
-function rect:bottom()
+function drect:bottom()
     return self.position.y + self.h / 2
 end
 
-function rect:top_left()
+function drect:top_left()
     return vec:new({ x = self:left(), y = self:top() })
 end
 
-function rect:top_right()
+function drect:top_right()
     return vec:new({ x = self:right(), y = self:top() })
 end
 
-function rect:bottom_left()
+function drect:bottom_left()
     return vec:new({ x = self:left(), y = self:bottom() })
 end
 
-function rect:bottom_right()
+function drect:bottom_right()
     return vec:new({ x = self:right(), y = self:bottom() })
 end
 
-function rect:contains(v)
+-- does the rect contain the point
+function drect:contains(v)
     return self:left() <= v.x and
             v.x <= self:right() and
             self:top() <= v.y and
             v.y <= self:bottom()
 end
 
-function rect:intersects(r)
+-- does the rect intersect with another rect
+function drect:intersects(r)
     return self:left() < r:right() and
             r:left() < self:right() and
             self:top() < r:bottom() and
             r:top() < self:bottom()
 end
 
-function rect:clamp(v)
+function drect:clamp(v)
     return vec:new({
         x = mid(self:left(), v.x, self:right()),
         y = mid(self:top(), v.y, self:bottom())
     })
 end
 
-function rect:clamp_rect(r)
-    return rect:new {
+function drect:clamp_rect(r)
+    return drect:new {
         position = self:clamp(r.position),
         w = r.w,
         h = r.h
     }
 end
 
-function rect:move(v)
-    return rect:new {
+function drect:move(v)
+    return drect:new {
         position = self.position + v,
         w = self.w,
         h = self.h
     }
 end
 
-function rect:clone()
-    return rect:new {
+function drect:clone()
+    return drect:new {
         position = self.position:clone(),
         w = self.w,
         h = self.h

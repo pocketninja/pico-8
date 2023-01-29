@@ -5,7 +5,7 @@ speed = {
 
 player = {
     --position = vec(10, 10),
-    rect = rect:new({
+    rect = drect:new({
         position = vec:new({ x = 15, y = 15 }),
         -- 1px smaller than actual sprite to allow for 1px gaps
         w = 7, h = 7

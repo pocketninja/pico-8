@@ -1,4 +1,5 @@
 actors = {}
+default_gravity = vec:new({ y = 0.1 })
 
 actor = {
     sprite = nil,
@@ -28,7 +29,7 @@ function actor:new(o)
     o.velocity = o.velocity or vec:new()
     o.friction = o.friction or vec:new({ x = 1, y = 1 })
     o.max_velocity = o.max_velocity or vec:new({ x = 10, y = 10 })
-    o.gravity = o.gravity or vec:new({ y = 0.1 })
+    o.gravity = o.gravity or vec:new({ y = default_gravity.y })
     setmetatable(o, self)
     self.__index = self;
 
@@ -61,150 +62,152 @@ function actor:draw(wrap)
             -- @todo flipping based on direction?
     )
 
-    -- if wrapping, and the sprite is within range of the edge, draw
-    -- off the other side to account
-    if wrap then
-        -- if we're heading out the top right, draw the sprite on the
-        -- bottom left
-        --if top_left.y < 0 and top_left.x > 128 then
-        --    sspr(
-        --            sprite_x,
-        --            sprite_y,
-        --            sprite_width,
-        --            sprite_height,
-        --            top_left.x - 128,
-        --            top_left.y + 128,
-        --            self.transform.w,
-        --            self.transform.h
-        --    )
-        --elseif top_left.y < 0 and top_left.x < 0 then
-        --    sspr(
-        --            sprite_x,
-        --            sprite_y,
-        --            sprite_width,
-        --            sprite_height,
-        --            top_left.x + 128,
-        --            top_left.y + 128,
-        --            self.transform.w,
-        --            self.transform.h
-        --    )
-        --elseif top_left.y > 128 and top_left.x > 128 then
-        --    sspr(
-        --            sprite_x,
-        --            sprite_y,
-        --            sprite_width,
-        --            sprite_height,
-        --            top_left.x - 128,
-        --            top_left.y - 128,
-        --            self.transform.w,
-        --            self.transform.h
-        --    )
-        --elseif top_left.y > 128 and top_left.x < 0 then
-        --    sspr(
-        --            sprite_x,
-        --            sprite_y,
-        --            sprite_width,
-        --            sprite_height,
-        --            top_left.x + 128,
-        --            top_left.y - 128,
-        --            self.transform.w,
-        --            self.transform.h
-        --    )
-        --elseif top_left.y < 0 then
-        --    sspr(
-        --            sprite_x,
-        --            sprite_y,
-        --            sprite_width,
-        --            sprite_height,
-        --            top_left.x,
-        --            top_left.y + 128,
-        --            self.transform.w,
-        --            self.transform.h
-        --    )
-        --elseif top_left.y > 128 then
-        --    sspr(
-        --            sprite_x,
-        --            sprite_y,
-        --            sprite_width,
-        --            sprite_height,
-        --            top_left.x,
-        --            top_left.y - 128,
-        --            self.transform.w,
-        --            self.transform.h
-        --    )
-        --elseif top_left.x < 0 then
-        --    sspr(
-        --            sprite_x,
-        --            sprite_y,
-        --            sprite_width,
-        --            sprite_height,
-        --            top_left.x + 128,
-        --            top_left.y,
-        --            self.transform.w,
-        --            self.transform.h
-        --    )
-        --elseif top_left.x > 128 then
-        --    sspr(
-        --            sprite_x,
-        --            sprite_y,
-        --            sprite_width,
-        --            sprite_height,
-        --            top_left.x - 128,
-        --            top_left.y,
-        --            self.transform.w,
-        --            self.transform.h
-        --    )
-        --end
+    if (false) then
+        -- if wrapping, and the sprite is within range of the edge, draw
+        -- off the other side to account
+        if wrap then
+            -- if we're heading out the top right, draw the sprite on the
+            -- bottom left
+            --if top_left.y < 0 and top_left.x > 128 then
+            --    sspr(
+            --            sprite_x,
+            --            sprite_y,
+            --            sprite_width,
+            --            sprite_height,
+            --            top_left.x - 128,
+            --            top_left.y + 128,
+            --            self.transform.w,
+            --            self.transform.h
+            --    )
+            --elseif top_left.y < 0 and top_left.x < 0 then
+            --    sspr(
+            --            sprite_x,
+            --            sprite_y,
+            --            sprite_width,
+            --            sprite_height,
+            --            top_left.x + 128,
+            --            top_left.y + 128,
+            --            self.transform.w,
+            --            self.transform.h
+            --    )
+            --elseif top_left.y > 128 and top_left.x > 128 then
+            --    sspr(
+            --            sprite_x,
+            --            sprite_y,
+            --            sprite_width,
+            --            sprite_height,
+            --            top_left.x - 128,
+            --            top_left.y - 128,
+            --            self.transform.w,
+            --            self.transform.h
+            --    )
+            --elseif top_left.y > 128 and top_left.x < 0 then
+            --    sspr(
+            --            sprite_x,
+            --            sprite_y,
+            --            sprite_width,
+            --            sprite_height,
+            --            top_left.x + 128,
+            --            top_left.y - 128,
+            --            self.transform.w,
+            --            self.transform.h
+            --    )
+            --elseif top_left.y < 0 then
+            --    sspr(
+            --            sprite_x,
+            --            sprite_y,
+            --            sprite_width,
+            --            sprite_height,
+            --            top_left.x,
+            --            top_left.y + 128,
+            --            self.transform.w,
+            --            self.transform.h
+            --    )
+            --elseif top_left.y > 128 then
+            --    sspr(
+            --            sprite_x,
+            --            sprite_y,
+            --            sprite_width,
+            --            sprite_height,
+            --            top_left.x,
+            --            top_left.y - 128,
+            --            self.transform.w,
+            --            self.transform.h
+            --    )
+            --elseif top_left.x < 0 then
+            --    sspr(
+            --            sprite_x,
+            --            sprite_y,
+            --            sprite_width,
+            --            sprite_height,
+            --            top_left.x + 128,
+            --            top_left.y,
+            --            self.transform.w,
+            --            self.transform.h
+            --    )
+            --elseif top_left.x > 128 then
+            --    sspr(
+            --            sprite_x,
+            --            sprite_y,
+            --            sprite_width,
+            --            sprite_height,
+            --            top_left.x - 128,
+            --            top_left.y,
+            --            self.transform.w,
+            --            self.transform.h
+            --    )
+            --end
 
 
-        --when within the full length of the sprite from the edge, draw
-        -- appropriately from the other side
-        if top_left.x < 0 then
-            sspr(
-                    sprite_x,
-                    sprite_y,
-                    sprite_width,
-                    sprite_height,
-                    top_left.x + 128,
-                    top_left.y,
-                    self.transform.w,
-                    self.transform.h
-            )
-        elseif bottom_right.x > 128 then
-            sspr(
-                    sprite_x,
-                    sprite_y,
-                    sprite_width,
-                    sprite_height,
-                    top_left.x - 128,
-                    top_left.y,
-                    self.transform.w,
-                    self.transform.h
-            )
-        end
+            --when within the full length of the sprite from the edge, draw
+            -- appropriately from the other side
+            if top_left.x < 0 then
+                sspr(
+                        sprite_x,
+                        sprite_y,
+                        sprite_width,
+                        sprite_height,
+                        top_left.x + 128,
+                        top_left.y,
+                        self.transform.w,
+                        self.transform.h
+                )
+            elseif bottom_right.x > 128 then
+                sspr(
+                        sprite_x,
+                        sprite_y,
+                        sprite_width,
+                        sprite_height,
+                        top_left.x - 128,
+                        top_left.y,
+                        self.transform.w,
+                        self.transform.h
+                )
+            end
 
-        if top_left.y < 0 then
-            sspr(
-                    sprite_x,
-                    sprite_y,
-                    sprite_width,
-                    sprite_height,
-                    top_left.x,
-                    top_left.y + 128,
-                    self.transform.w,
-                    self.transform.h
-            )
-        elseif bottom_right.y > 128 then
-            sspr(
-                    sprite_x,
-                    sprite_y,
-                    sprite_width,
-                    sprite_height,
-                    top_left.x,
-                    top_left.y - 128,
-                    self.transform.w,
-                    self.transform.h
-            )
+            if top_left.y < 0 then
+                sspr(
+                        sprite_x,
+                        sprite_y,
+                        sprite_width,
+                        sprite_height,
+                        top_left.x,
+                        top_left.y + 128,
+                        self.transform.w,
+                        self.transform.h
+                )
+            elseif bottom_right.y > 128 then
+                sspr(
+                        sprite_x,
+                        sprite_y,
+                        sprite_width,
+                        sprite_height,
+                        top_left.x,
+                        top_left.y - 128,
+                        self.transform.w,
+                        self.transform.h
+                )
+            end
         end
     end
 end
